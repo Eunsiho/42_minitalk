@@ -6,14 +6,13 @@
 /*   By: hogkim <hogkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 12:39:48 by hogkim            #+#    #+#             */
-/*   Updated: 2022/05/03 14:49:50 by hogkim           ###   ########.fr       */
+/*   Updated: 2022/05/04 09:43:08 by hogkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <signal.h>
 #include <unistd.h>
 #include "libft/libft.h"
-//SIGUSR1 = 0, SIGUSR2 = 1;
 
 void	ft_to_server(pid_t server_pid, char *str)
 {
@@ -21,20 +20,21 @@ void	ft_to_server(pid_t server_pid, char *str)
 	int	j;
 
 	i = 0;
-	while (str[i++])
+	while (str[i])
 	{
 		j = 8;
-		while (--j > -1)
+		while (j--) 
 		{
-			if((c >> j) | 0)
+			if((str[i] >> j) & 1)
 				kill(server_pid, SIGUSR2);
 			else
 				kill(server_pid, SIGUSR1);
 		}
+		i++;
 	}
-	i = 8;
+/* 	i = 8;
 	while (--i)
-		kill(server_pid, SIGUSR1);
+		kill(server_pid, SIGUSR1); */
 }
 
 int	main(int argc, char **argv)

@@ -6,7 +6,7 @@
 #    By: hogkim <hogkim@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/03 14:55:55 by hogkim            #+#    #+#              #
-#    Updated: 2022/05/03 15:06:22 by hogkim           ###   ########.fr        #
+#    Updated: 2022/05/04 09:50:40 by hogkim           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,15 +16,26 @@ OBJS	 = $(SRCS:.c=.o)
 CC		 = gcc
 CFLAGS	 = -Wall -Wextra -Werror
 
-all :
-	make all -C ft_printf
-	$(CC) $(CFLAGS) server.c ft_printf/libftprintf.a -o server
-	$(CC) $(CFLAGS) client.c ft_printf/libftprintf.a -o client
+%.o : %.c
+	$(CC) $(CFLAGS) -c $<
+
+all : server client
+
+server : server.o libft
+	$(CC) $(CFLAGS) -o $@ $< -Llibft -lft
+
+client : client.o libft
+	$(CC) $(CFLAGS) -o $@ $< -Llibft -lft
+
+libft : 
+	make -C libft
 
 clean :
-	make clean -C ft_printf
-	rm -rf server
-	rm -rf client
+	rm -rf $(OBJS)
+	make -C libft clean
 
 fclean : clean
-	
+	rm -rf server client
+	make -C libft fclean
+
+re : fclean all

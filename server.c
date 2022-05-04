@@ -6,30 +6,37 @@
 /*   By: hogkim <hogkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 12:39:53 by hogkim            #+#    #+#             */
-/*   Updated: 2022/05/03 14:49:51 by hogkim           ###   ########.fr       */
+/*   Updated: 2022/05/04 09:44:18 by hogkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <signal.h>
 #include <unistd.h>
 #include "libft/libft.h"
-//SIGUSR1 = 0, SIGUSR2 = 1
 
-int	ft_from_client(int signum, siginfo_t *si, void *ptr)
+void	ft_from_client(int signo)
 {
-	
-	(void)ptr;
+	static int	i = 0;
+	static char	c = 0;
+
+	i = 0;
+	c |= (signo == SIGUSR2);
+	if (++i == 8)
+	{
+		ft_putchar_fd(c, 1);
+		c = 0;
+	}
+	else
+		c <<= 1;
 }
 
 int	main(void)
 {
-	struct sigaction sa;
-
-	ft_printf("Server PID : %u\n", getpid());
-	sa.sa_flags = SA_SIGINFO;
-	sa.sa_sigaciton = ;
+	ft_putstr_fd("Server PID : ", 1);
+	ft_putnbr_fd(getpid(), 1);
+	signal(SIGUSR1, ft_from_client);
+	signal(SIGUSR2, ft_from_client);
 	while (1)
-	{
-		signal(S)
-	}
+		pause();
+	return (0);
 }
