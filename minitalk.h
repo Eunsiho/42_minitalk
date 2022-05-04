@@ -1,21 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
+/*   minitalk.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hogkim <hogkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/17 00:40:10 by hogkim            #+#    #+#             */
-/*   Updated: 2021/12/17 00:41:51 by hogkim           ###   ########.fr       */
+/*   Created: 2022/05/04 20:35:34 by hogkim            #+#    #+#             */
+/*   Updated: 2022/05/04 22:23:54 by hogkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef MINITALK_H
+# define MINITALK_H
 
-void	ft_putendl_fd(char *s, int fd)
-{
-	if (!s)
-		return ;
-	ft_putstr_fd(s, fd);
-	ft_putchar_fd('\n', fd);
-}
+# include <signal.h>
+# include "ft_printf/ft_printf.h"
+
+#endif
