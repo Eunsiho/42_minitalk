@@ -6,26 +6,40 @@
 #    By: hogkim <hogkim@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/03 14:55:55 by hogkim            #+#    #+#              #
-#    Updated: 2022/05/04 13:39:04 by hogkim           ###   ########.fr        #
+#    Updated: 2022/05/04 16:00:01 by hogkim           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS 	= server.c client.c
-OBJS	 = $(SRCS:.c=.o)
+SERVER		= server
+CLIENT		= client
+LIBFT		= libft.a
 
-CC		 = gcc
-CFLAGS	 = -Wall -Wextra -Werror -g
+SERVER_SRC	= server.c
+SERVER_OBJ	= server.o
 
-.o: .c
+CLIENT_SRC	= client.c
+CLIENT_OBJ	= client.o
+
+CC			= gcc
+CFLAGS		= -Wall -Wextra -Werror
+
+.o : .c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-all : $(OBJS)
+all : $(SERVER) $(CLIENT)
+
+$(SERVER) : $(SERVER_OBJ) $(LIBFT)
+	$(CC) $(CFLAGS) -o $@ $^
+
+$(CLIENT) : $(CLIENT_OBJ) $(LIBFT)
+	$(CC) $(CFLAGS) -o $@ $^
+
+$(LIBFT) :
 	make -C libft
-	$(CC) $(CFLAGS) libft/libft.a server.o -o server
-	$(CC) $(CFLAGS) libft/libft.a client.o -o client
+	cp libft/libft.a .
 
 clean :
-	rm -rf $(OBJS)
+	rm -rf $(SERVER_OBJ) $(CLIENT_OBJ)
 	make -C libft clean
 
 fclean : clean
