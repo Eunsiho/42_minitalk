@@ -6,11 +6,13 @@
 /*   By: hogkim <hogkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 12:39:48 by hogkim            #+#    #+#             */
-/*   Updated: 2022/05/04 22:24:58 by hogkim           ###   ########.fr       */
+/*   Updated: 2022/05/06 13:11:48 by hogkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
+#include <time.h>
+#include <stdio.h>
 
 void	ft_confirmed(int signo)
 {

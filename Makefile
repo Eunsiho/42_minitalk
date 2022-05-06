@@ -6,10 +6,11 @@
 #    By: hogkim <hogkim@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/03 14:55:55 by hogkim            #+#    #+#              #
-#    Updated: 2022/05/04 22:22:28 by hogkim           ###   ########.fr        #
+#    Updated: 2022/05/06 13:11:14 by hogkim           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
+NAME			= minitalk
 SERVER			= server
 CLIENT			= client
 PRINTF			= libftprintf.a
@@ -26,9 +27,11 @@ CFLAGS		= -Wall -Wextra -Werror
 .o : .c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-all : $(SERVER) $(CLIENT)
+all : $(NAME)
 
-bonus : $(SERVER) $(CLIENT)
+$(NAME) : $(SERVER) $(CLIENT)
+
+bonus : $(NAME)
 
 $(SERVER) : $(SERVER_OBJ) $(PRINTF)
 	$(CC) $(CFLAGS) -o $@ $^
@@ -48,4 +51,6 @@ fclean : clean
 	rm -rf server client libftprintf.a
 	make -C ft_printf fclean
 
-re : fclean all
+re :
+	make fclean
+	make all
