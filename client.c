@@ -6,50 +6,29 @@
 /*   By: hogkim <hogkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 12:39:48 by hogkim            #+#    #+#             */
-/*   Updated: 2022/05/06 13:11:48 by hogkim           ###   ########.fr       */
+/*   Updated: 2022/05/06 15:05:34 by hogkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
-#include <time.h>
-#include <stdio.h>
-
-void	ft_confirmed(int signo)
-{
-	static int	from_server = 0;
-
-	if (signo == SIGUSR2)
-		from_server++;
-	if (signo == SIGUSR1)
-	{
-		ft_printf("From Server : %d\n", from_server);
-		exit(0);
-	}
-}
 
 void	ft_to_server(pid_t server_pid, char *str)
 {
-	int		j;
+	int		i;
 	char	c;
 
 	while (*str)
 	{
-		j = 8;
+		i = 8;
 		c = *str++;
-		while (j--)
+		while (i--)
 		{
-			if ((c >> j) & 1)
+			if ((c >> i) & 1)
 				kill(server_pid, SIGUSR2);
 			else
 				kill(server_pid, SIGUSR1);
-			usleep(80);
+			usleep(50);
 		}
-	}
-	j = 8;
-	while (j--)
-	{
-		kill(server_pid, SIGUSR1);
-		usleep(80);
 	}
 }
 
@@ -60,11 +39,6 @@ int	main(int argc, char **argv)
 		ft_putstr_fd("arguments are wrong\n", 1);
 		return (0);
 	}
-	ft_printf("To Server   : %d\n", ft_strlen(argv[2]));
-	signal(SIGUSR1, ft_confirmed);
-	signal(SIGUSR2, ft_confirmed);
 	ft_to_server(ft_atoi(argv[1]), argv[2]);
-	while (1)
-		pause();
 	return (0);
 }
